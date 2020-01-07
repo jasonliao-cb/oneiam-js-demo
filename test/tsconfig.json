@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": ["es2018", "dom"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "types": ["@wdio/sync", "@types/mocha", "@types/chai-string"]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "server/angular/**/*.ts"
+  ]
+}
