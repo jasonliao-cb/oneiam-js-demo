@@ -1,0 +1,14 @@
+version: "3"
+services:
+  test:
+    build: .
+    environment:
+      - SELENIUM=1
+      - TEST_SERVER=http://test:3000
+    entrypoint: ["npx", "wdio", "--hostname=selenium"]
+    depends_on:
+      - selenium
+  selenium:
+    image: selenium/standalone-chrome:3.141
+    volumes:
+      - /dev/shm:/dev/shm

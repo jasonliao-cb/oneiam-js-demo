@@ -5,6 +5,7 @@ require('ts-node').register({
 
 const { TestServerWdioService } = require('./test/server/wdio');
 const debug = process.env.DEBUG;
+const selenium = process.env.SELENIUM;
 
 exports.config = {
   //
@@ -17,7 +18,7 @@ exports.config = {
   runner: 'local',
   //
   // Override default path ('/wd/hub') for chromedriver service.
-  path: '/',
+  path: selenium ? '/wd/hub' : '/',
   //
   // ==================
   // Specify Test Files
@@ -119,7 +120,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: [[TestServerWdioService], 'chromedriver'],
+  services: [[TestServerWdioService]].concat(selenium ? [] : ['chromedriver']),
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

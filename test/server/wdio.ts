@@ -22,7 +22,7 @@ export class TestServerWdioService {
     const cwd = path.join(__dirname, "angular");
     const ng = path.join(__dirname, "../../node_modules/@angular/cli/bin/ng");
 
-    this.angular = spawn("node", [ng, "serve"], { cwd });
+    this.angular = spawn("node", [ng, "serve", "--disable-host-check"], { cwd });
 
     await new Promise((resolve, reject) => {
       this.angular.stdout.on("data", data => {

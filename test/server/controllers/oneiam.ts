@@ -11,7 +11,7 @@ export function authenticate(req: Request, res: Response) {
 
   res.redirect("https://wwwtest.auth.careerbuilder.com/connect/authorize?" + querystring.stringify({
     client_id: "demo_client_id",
-    redirect_uri: "http://localhost:3000/oneiam/callback",
+    redirect_uri: req.protocol + "://" + req.get("host") + "/oneiam/callback",
     response_type: "code",
     scope: "openid profile",
     state: session.state,

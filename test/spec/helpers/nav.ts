@@ -1,10 +1,11 @@
 import { waitForAngular } from "./utils";
 
-export const TestPageUrl = "http://localhost:3000/";
-export const AngularHomePageUrl = "http://localhost:3000/angular/";
-export const AngularPublicPageUrl = "http://localhost:3000/angular/public";
-export const AngularSecurePageUrl = "http://localhost:3000/angular/secure";
-export const AngularDeepSecurePageUrl = "http://localhost:3000/angular/secure/deep";
+export const BaseUrl = process.env.TEST_SERVER || "http://localhost:3000";
+export const TestPageUrl = BaseUrl + "/";
+export const AngularHomePageUrl = BaseUrl + "/angular/";
+export const AngularPublicPageUrl = BaseUrl + "/angular/public";
+export const AngularSecurePageUrl = BaseUrl + "/angular/secure";
+export const AngularDeepSecurePageUrl = BaseUrl + "/angular/secure/deep";
 
 export function openTestPage(): void {
   browser.navigateTo(TestPageUrl);
