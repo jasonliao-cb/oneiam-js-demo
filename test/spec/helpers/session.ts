@@ -5,16 +5,17 @@ import { runInNewWindow, runInOneiamContext, runInTestPage } from "./utils";
 
 export const OneiamLoginPageUrl = "https://wwwtest.auth.careerbuilder.com/account/login";
 export const OneiamLogoutPageUrl = "https://wwwtest.auth.careerbuilder.com/account/logout";
-export const TestUserEmail = "test@cb.com";
-export const TestUserPassword = "Pass123$";
+export const TestUserEmail = "cbtest.us@gmail.com";
+export const TestUserPassword = "c0lumbusrocks!";
 
 export function loginOneiam(): void {
   runInNewWindow(() => {
     browser.navigateTo(OneiamLoginPageUrl);
-    if ($("form#account").isExisting()) {
+    if ($("#aspnetForm").isExisting()) {
       $("#Input_Email").setValue(TestUserEmail);
       $("#Input_Password").setValue(TestUserPassword);
-      $("#account button[type='submit']").click();
+      $("#aspnetForm button[type='submit']").click();
+      browser.waitUntil(() => browser.getUrl() !== OneiamLoginPageUrl);
     }
   });
 }

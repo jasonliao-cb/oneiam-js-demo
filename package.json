@@ -1,6 +1,6 @@
 {
   "name": "@cb/oneiam",
-  "version": "1.0.0",
+  "version": "1.1.0-dev",
   "publishConfig": {
     "registry": "https://cbdatascience.jfrog.io/cbdatascience/api/npm/cb-node-release/"
   },
@@ -36,7 +36,7 @@
     "@wdio/sync": "^5.17.0",
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",
-    "chromedriver": "^79.0.0",
+    "chromedriver": "^87.0.4",
     "concurrently": "^5.0.0",
     "cookie-session": "^1.3.3",
     "copy": "^0.3.2",
