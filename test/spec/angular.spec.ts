@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { mockLocation, redirected, redirectUrl } from "./helpers/mock";
-import { AngularDeepSecurePageUrl, AngularSecurePageUrl, clickAngularDeepSecurePageLink, clickAngularPublicPageLink,
-  clickAngularSecurePageLink, openAngularHomePage } from "./helpers/nav";
+import { clickAngularDeepSecurePageLink, clickAngularPublicPageLink, clickAngularSecurePageLink,
+  getAngularDeepSecurePageUrl, getAngularSecurePageUrl, openAngularHomePage } from "./helpers/nav";
 import { oneiam, oneiamAuthGuard, oneiamService } from "./helpers/oneiam";
 import { prepareSession } from "./helpers/session";
 
@@ -35,7 +35,7 @@ describe("oneiam/angular", function () {
       it("should redirect to authenticate uri", function () {
         clickAngularSecurePageLink();
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(AngularSecurePageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getAngularSecurePageUrl())}`);
         expect($("h1").getText()).be.equal("Home Page"); // secure page not entered
       });
 
@@ -58,7 +58,7 @@ describe("oneiam/angular", function () {
       it("should redirect to authenticate uri", function () {
         clickAngularDeepSecurePageLink();
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(AngularDeepSecurePageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getAngularDeepSecurePageUrl())}`);
         expect($("h1").getText()).be.equal("Home Page"); // deep secure page not entered
       });
 
@@ -193,7 +193,7 @@ describe("oneiam/angular", function () {
       it("should redirect to authenticate uri", function () {
         clickAngularSecurePageLink();
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(AngularSecurePageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getAngularSecurePageUrl())}`);
         expect($("h1").getText()).be.equal("Home Page"); // secure page not entered
       });
 
@@ -216,7 +216,7 @@ describe("oneiam/angular", function () {
       it("should redirect to authenticate uri", function () {
         clickAngularDeepSecurePageLink();
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(AngularDeepSecurePageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getAngularDeepSecurePageUrl())}`);
         expect($("h1").getText()).be.equal("Home Page"); // deep secure page not entered
       });
 

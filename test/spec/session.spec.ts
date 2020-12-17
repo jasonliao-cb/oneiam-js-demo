@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { changeConfig } from "./helpers/mock";
-import { openTestPage } from "./helpers/nav";
+import { openTestPage, Server0Origin, Server1Origin } from "./helpers/nav";
 import { oneiam } from "./helpers/oneiam";
 import { loginOneiam, logoutOneiam, prepareSession } from "./helpers/session";
 
@@ -57,48 +57,90 @@ describe("oneiam.session", function () {
   });
 
   describe("#changed", function () {
-    context("local authenticated: false, oneiam authenticated: false", function () {
-      beforeEach(() => prepareSession(false, false));
+    context("same origin", function () {
+      context("local authenticated: false, oneiam authenticated: false", function () {
+        beforeEach(() => prepareSession(false, false));
 
-      it("should return false", function () {
-        openTestPage();
-        expect(oneiam.session.changed()).to.be.false;
+        it("should return false", function () {
+          openTestPage();
+          expect(oneiam.session.changed()).to.be.false;
+        });
+      });
+
+      context("local authenticated: false, oneiam authenticated: true", function () {
+        beforeEach(() => prepareSession(false, true));
+
+        it("should return true", function () {
+          openTestPage();
+          expect(oneiam.session.changed()).to.be.true;
+        });
+      });
+
+      context("local authenticated: true, oneiam authenticated: false", function () {
+        beforeEach(() => prepareSession(true, false));
+
+        it("should return true", function () {
+          openTestPage();
+          expect(oneiam.session.changed()).to.be.true;
+        });
+      });
+
+      context("local authenticated: true, oneiam authenticated: true, oneiam reauthenticated: false", function () {
+        beforeEach(() => prepareSession(true, true, false));
+
+        it("should return false", function () {
+          openTestPage();
+          expect(oneiam.session.changed()).to.be.false;
+        });
+      });
+
+      context("local authenticated: true, oneiam authenticated: true, oneiam reauthenticated: true", function () {
+        beforeEach(() => prepareSession(true, true, true));
+
+        it("should return true", function () {
+          openTestPage();
+          expect(oneiam.session.changed()).to.be.true;
+        });
       });
     });
 
-    context("local authenticated: false, oneiam authenticated: true", function () {
-      beforeEach(() => prepareSession(false, true));
+    context("cross origin", function () {
+      context("when alternateOrigins is not specified", function () {
+        beforeEach(() => prepareSession(true, true, false));
 
-      it("should return true", function () {
-        openTestPage();
-        expect(oneiam.session.changed()).to.be.true;
+        it("should return true", function () {
+          openTestPage({ server: 1 });
+          expect(oneiam.session.changed()).to.be.true;
+        });
       });
-    });
 
-    context("local authenticated: true, oneiam authenticated: false", function () {
-      beforeEach(() => prepareSession(true, false));
+      context("when alternateOrigins is specified but does not contain original origin", function () {
+        beforeEach(() => prepareSession(true, true, false));
 
-      it("should return true", function () {
-        openTestPage();
-        expect(oneiam.session.changed()).to.be.true;
+        it("should return true", function () {
+          openTestPage({ server: 1, query: { alternateOrigins: [Server1Origin] } });
+          expect(oneiam.session.changed()).to.be.true;
+        });
       });
-    });
 
-    context("local authenticated: true, oneiam authenticated: true, oneiam reauthenticated: false", function () {
-      beforeEach(() => prepareSession(true, true, false));
+      context("when alternateOrigins is specified and contans original origin", function () {
+        context("oneiam reauthenticated: false", function () {
+          beforeEach(() => prepareSession(true, true, false));
 
-      it("should return false", function () {
-        openTestPage();
-        expect(oneiam.session.changed()).to.be.false;
-      });
-    });
+          it("should return false", function () {
+            openTestPage({ server: 1, query: { alternateOrigins: [Server0Origin, Server1Origin] } });
+            expect(oneiam.session.changed()).to.be.false;
+          });
+        });
 
-    context("local authenticated: true, oneiam authenticated: true, oneiam reauthenticated: true", function () {
-      beforeEach(() => prepareSession(true, true, true));
+        context("oneiam reauthenticated: true", function () {
+          beforeEach(() => prepareSession(true, true, true));
 
-      it("should return true", function () {
-        openTestPage();
-        expect(oneiam.session.changed()).to.be.true;
+          it("should return true", function () {
+            openTestPage({ server: 1, query: { alternateOrigins: [Server0Origin, Server1Origin] } });
+            expect(oneiam.session.changed()).to.be.true;
+          });
+        });
       });
     });
   });
