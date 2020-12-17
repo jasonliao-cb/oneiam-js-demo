@@ -1,4 +1,4 @@
-type PromiseResolve<T> = (value?: T | PromiseLike<T>) => void;
+type PromiseResolve<T> = (value: T | PromiseLike<T>) => void;
 type PromiseReject = (reason?: any) => void;
 type PromiseTimeout = (callback: PromiseTimeoutCallback) => void;
 type PromiseTimeoutCallback = () => any;
