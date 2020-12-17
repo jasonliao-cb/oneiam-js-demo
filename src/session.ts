@@ -41,7 +41,8 @@ export class OneiamSessionManager {
       onlisten: () => {
         const message = JSON.stringify({
           clientId: this.config.clientId,
-          sessionState: state
+          sessionState: state,
+          alternateOrigins: this.config.alternateOrigins
         });
         this.iframe.postMessage(message, this.issuer.origin);
       }

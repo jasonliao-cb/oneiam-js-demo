@@ -3,6 +3,7 @@ export interface OneiamConfig {
   clientId: string;
   authenticateUri?: string;
   cookieName?: string;
+  alternateOrigins?: string[];
   debug?: boolean;
 }
 
