@@ -62,7 +62,7 @@ export class Oneiam {
 
     const requireAuthentication = !!options.requireAuthentication;
     const refreshOnChange = options.refreshOnChange != null ? !!options.refreshOnChange : true;
-    const debug = options.debug != null ? options.debug : this.config.debug;
+    const debug = options.debug || this.config.debug || document.cookie.indexOf("oneiam_js_debug=1") >= 0;
     const location = this.location || window.location;
     const oneiamAuthenticated = await this.session.authenticated();
     const sessionStateChanged = await this.session.changed();

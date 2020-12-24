@@ -6,7 +6,7 @@ import { OneiamService } from "./service";
 
 @NgModule()
 export class OneiamModule {
-  public static forRoot(config: OneiamConfig): ModuleWithProviders {
+  public static forRoot(config: OneiamConfig): ModuleWithProviders<OneiamModule> {
     return {
       ngModule: OneiamModule,
       providers: [

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { OneiamAuthenticateResult } from "../../src";
 import { changeConfig, mockLocation, redirected, redirectUrl } from "./helpers/mock";
-import { openTestPage, TestPageUrl } from "./helpers/nav";
+import { getTestPageUrl, openTestPage } from "./helpers/nav";
 import { oneiam } from "./helpers/oneiam";
 import { loginOneiam, logoutLocally, logoutOneiam } from "./helpers/session";
 
@@ -18,7 +18,7 @@ describe("oneiam.authenticate", function () {
       result = oneiam.authenticate({ silent: false });
       expect(result).to.equal("authenticate");
       expect(redirected()).to.be.true;
-      expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(TestPageUrl)}`);
+      expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getTestPageUrl())}`);
 
       mockLocation();
       result = oneiam.authenticate({ silent: false, next: "https://custom/next/url?with=query" });
@@ -31,7 +31,7 @@ describe("oneiam.authenticate", function () {
       result = oneiam.authenticate({ silent: false });
       expect(result).to.equal("authenticate");
       expect(redirected()).to.be.true;
-      expect(redirectUrl()).to.equal(`/custom/authenticate?next=${encodeURIComponent(TestPageUrl)}`);
+      expect(redirectUrl()).to.equal(`/custom/authenticate?next=${encodeURIComponent(getTestPageUrl())}`);
     });
   });
 

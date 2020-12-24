@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { OneiamSynchronizeResult } from "../../src";
 import { mockLocation, redirected, redirectUrl, refreshed } from "./helpers/mock";
-import { openTestPage, TestPageUrl } from "./helpers/nav";
+import { getTestPageUrl, openTestPage } from "./helpers/nav";
 import { oneiam } from "./helpers/oneiam";
 import { prepareSession } from "./helpers/session";
 
@@ -25,7 +25,7 @@ describe("oneiam.synchronize", function () {
         const result = oneiam.synchronize({ requireAuthentication: true });
         expect(result).to.equal("authenticate");
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(TestPageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getTestPageUrl())}`);
         // we expect /oneiam/authenticate to redirect to OneIAM
       });
     });
@@ -89,7 +89,7 @@ describe("oneiam.synchronize", function () {
         const result = oneiam.synchronize({ requireAuthentication: true });
         expect(result).to.equal("authenticate");
         expect(redirected()).to.be.true;
-        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(TestPageUrl)}`);
+        expect(redirectUrl()).to.equal(`/oneiam/authenticate?next=${encodeURIComponent(getTestPageUrl())}`);
         // we expect /oneiam/authenticate to redirect to OneIAM
       });
     });

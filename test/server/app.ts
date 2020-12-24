@@ -7,7 +7,7 @@ import { home } from "./controllers/home";
 import * as oneiam from "./controllers/oneiam";
 
 export const app = express();
-export const port = 3000;
+export const ports = [3000, 3001];
 
 app.use(cookieSession({ secret: "test" }));
 

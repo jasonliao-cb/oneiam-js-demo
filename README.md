@@ -171,6 +171,11 @@ Instantiate `Oneiam` with provided `config`.
       The name of the cookie that stores session state value. It must match what's set in `/oneiam/callback`. Defaults
       to `oneiam_ss`.
 
+    * `alternateOrigins`: `string[]` *Optional* (*v1.1.0+*)
+
+      Alternate origins your app uses to connect with OneIAM. Use this if you have multiple domain names sharing the
+      same session. For this to work, make sure you have shared the session state cookie across domains.
+
     * `debug`: `boolean` *Optional*
 
       Enable logging for [oneiam.synchronize(options?)](#oneiamsynchronizeoptions). Defaults to `false`.

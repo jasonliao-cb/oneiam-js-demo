@@ -4,8 +4,9 @@ require('ts-node').register({
 });
 
 const { TestServerWdioService } = require('./test/server/wdio');
-const debug = process.env.DEBUG;
-const selenium = process.env.SELENIUM;
+const DEBUG = process.env.DEBUG;
+const SELENIUM = process.env.SELENIUM;
+const MAX_INSTANCES = DEBUG ? 1 : (parseInt(process.env.MAX_BROWSER_INSTANCES) || 5);
 
 exports.config = {
   //
@@ -18,7 +19,7 @@ exports.config = {
   runner: 'local',
   //
   // Override default path ('/wd/hub') for chromedriver service.
-  path: selenium ? '/wd/hub' : '/',
+  path: SELENIUM ? '/wd/hub' : '/',
   //
   // ==================
   // Specify Test Files
@@ -51,7 +52,7 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: debug ? 1 : 10,
+  maxInstances: MAX_INSTANCES,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -61,18 +62,19 @@ exports.config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
-    maxInstances: debug ? 1 : 5,
+    // maxInstances: MAX_INSTANCES,
     //
     browserName: 'chrome',
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
     // excludeDriverLogs: ['bugreport', 'server'],
+    pageLoadStrategy: 'eager',
   }],
   //
   //
   //
-  execArgv: debug ? ['--inspect-brk=28813'] : [],
+  execArgv: DEBUG ? ['--inspect-brk=28813'] : [],
   //
   // ===================
   // Test Configurations
@@ -120,7 +122,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: [[TestServerWdioService]].concat(selenium ? [] : ['chromedriver']),
+  services: [[TestServerWdioService]].concat(SELENIUM ? [] : ['chromedriver']),
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

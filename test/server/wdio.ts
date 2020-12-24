@@ -1,11 +1,11 @@
 import { ChildProcess, spawn } from "child_process";
-import { Server } from "http";
+import http, { Server } from "http";
 import path from "path";
-import { app, port } from "./app";
+import { app, ports } from "./app";
 
 export class TestServerWdioService {
   private angular?: ChildProcess;
-  private express?: Server;
+  private express?: Server[] = [];
 
   public async onPrepare(): Promise<void> {
     await this.startAngular();
@@ -24,7 +24,7 @@ export class TestServerWdioService {
 
     this.angular = spawn("node", [ng, "serve", "--disable-host-check"], { cwd });
 
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       this.angular.stdout.on("data", data => {
         process.stdout.write(data);
         const s = data.toString();
@@ -53,18 +53,17 @@ export class TestServerWdioService {
   }
 
   private async startExpress(): Promise<void> {
-    await new Promise(resolve => {
-      this.express = app.listen(port, () => {
+    await Promise.all(ports.map((port, i) => new Promise<void>(resolve => {
+      this.express[i] = http.createServer(app).listen(port, () => {
         console.log(`App listening on http://localhost:${port}`);
         resolve();
       });
-    });
+    })));
   }
 
   private async stopExpress(): Promise<void> {
-    if (this.express) {
-      this.express.close();
-      this.express = null;
-    }
+    await Promise.all(this.express.map(app => new Promise<void>(resolve => {
+      app.close(() => resolve());
+    })));
   }
 }
