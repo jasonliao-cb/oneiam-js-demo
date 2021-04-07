@@ -3,8 +3,8 @@ import { openTestPage } from "./nav";
 import { oneiam } from "./oneiam";
 import { runInNewWindow, runInOneiamContext, runInTestPage } from "./utils";
 
-export const OneiamLoginPageUrl = "https://wwwtest.auth.careerbuilder.com/account/login";
-export const OneiamLogoutPageUrl = "https://wwwtest.auth.careerbuilder.com/account/logout";
+export const OneiamLoginPageUrl = "https://auth.careerbuilder.com/account/login";
+export const OneiamLogoutPageUrl = "https://auth.careerbuilder.com/account/logout";
 export const TestUserEmail = "cbtest.us@gmail.com";
 export const TestUserPassword = "c0lumbusrocks!";
 

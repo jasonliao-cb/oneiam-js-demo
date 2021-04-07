@@ -9,8 +9,8 @@ export function authenticate(req: Request, res: Response) {
   session.silent = (req.query.silent === "true");
   session.next = req.query.next;
 
-  res.redirect("https://wwwtest.auth.careerbuilder.com/connect/authorize?" + querystring.stringify({
-    client_id: "demo_client_id",
+  res.redirect("https://auth.careerbuilder.com/connect/authorize?" + querystring.stringify({
+    client_id: "OC1FA9D28B",
     redirect_uri: req.protocol + "://" + req.get("host") + "/oneiam/callback",
     response_type: "code",
     scope: "openid profile",
