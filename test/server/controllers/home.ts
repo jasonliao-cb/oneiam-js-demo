@@ -9,8 +9,8 @@ export function home(req: Request, res: Response) {
         <script src="/oneiam.js"></script>
         <script>
           var oneiam = new Oneiam({
-            issuer: "https://wwwtest.auth.careerbuilder.com",
-            clientId: "demo_client_id",
+            issuer: "https://auth.careerbuilder.com",
+            clientId: "OC1FA9D28B",
             alternateOrigins: ${
               req.query.alternateOrigins ?
                 JSON.stringify([].concat(req.query.alternateOrigins)) :

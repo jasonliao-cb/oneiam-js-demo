@@ -20,8 +20,8 @@ import { SecureComponent } from "./secure/secure.component";
     BrowserModule,
     AppRoutingModule,
     OneiamModule.forRoot({
-      issuer: "https://wwwtest.auth.careerbuilder.com",
-      clientId: "demo_client_id"
+      issuer: "https://auth.careerbuilder.com",
+      clientId: "OC1FA9D28B"
     })
   ],
   providers: [],
