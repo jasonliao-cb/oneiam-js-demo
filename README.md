@@ -337,3 +337,7 @@ See [constructor(config)](#constructorconfig).
 })
 export class AppModule {}
 ```
+
+## Development
+
+Check documentation [here](https://careerbuilder.atlassian.net/wiki/spaces/PS/pages/880607549/OneIAM+JS).
