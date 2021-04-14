@@ -37,7 +37,7 @@ export class OneiamSessionManager {
 
   private async check(state: string | undefined): Promise<string> {
     await this.initialize();
-    return await this.iframe.receiveMessage(this.issuer.origin, {
+    const result = await this.iframe.receiveMessage(this.issuer.origin, {
       onlisten: () => {
         const message = JSON.stringify({
           clientId: this.config.clientId,
@@ -47,5 +47,10 @@ export class OneiamSessionManager {
         this.iframe.postMessage(message, this.issuer.origin);
       }
     });
+    if (result === "changed" || result === "unchanged") {
+      return result;
+    } else {
+      throw new Error("OneIAM checksession failed.");
+    }
   }
 }
